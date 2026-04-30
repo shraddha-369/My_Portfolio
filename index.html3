@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shraddha Rawat — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+  /* ──────────────────────────────────────────
+     TOKENS
+  ────────────────────────────────────────── */
+  :root {
+    --bg:        #0a0a0f;
+    --bg2:       #111118;
+    --bg3:       #18181f;
+    --surface:   #1e1e28;
+    --border:    #2a2a38;
+    --accent:    #7c6af7;
+    --accent2:   #c084fc;
+    --accent3:   #38bdf8;
+    --text:      #e8e8f0;
+    --text2:     #9898b0;
+    --text3:     #5c5c78;
+    --radius:    14px;
+    --radius-lg: 22px;
+    --shadow:    0 4px 32px rgba(124,106,247,.18);
+    --shadow-lg: 0 8px 64px rgba(124,106,247,.22);
+    --transition: .35s cubic-bezier(.4,0,.2,1);
+  }
+  [data-theme="light"] {
+    --bg:      #f4f4fb;
+    --bg2:     #eaeaf5;
+    --bg3:     #ddddf2;
+    --surface: #ffffff;
+    --border:  #d0d0e8;
+    --text:    #111128;
+    --text2:   #4a4a6a;
+    --text3:   #9090b0;
+    --shadow:  0 4px 32px rgba(124,106,247,.12);
+    --shadow-lg: 0 8px 64px rgba(124,106,247,.16);
+  }
+
+  /* ──────────────────────────────────────────
+     RESET & BASE
+  ────────────────────────────────────────── */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.65;
+    overflow-x:hidden;
+    transition:background var(--transition),color var(--transition);
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  ul{list-style:none}
+  button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+
+  /* ──────────────────────────────────────────
+     NOISE OVERLAY
+  ────────────────────────────────────────── */
+  body::before{
+    content:'';
+    position:fixed;inset:0;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+    pointer-events:none;opacity:.4;
+  }
+
+  /* ──────────────────────────────────────────
+     SCROLLBAR
+  ────────────────────────────────────────── */
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:99px}
+
+  /* ──────────────────────────────────────────
+     UTILITY
+  ────────────────────────────────────────── */
+  .container{max-width:1120px;margin:0 auto;padding:0 24px}
+  .section{padding:100px 0;position:relative;z-index:1}
+  .section-label{
+    font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:12px;
+  }
+  .section-title{
+    font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3rem);
+    font-weight:800;line-height:1.15;margin-bottom:16px;
+  }
+  .section-sub{color:var(--text2);font-size:1.05rem;max-width:520px;margin-bottom:52px}
+  .tag{
+    display:inline-block;padding:4px 14px;border-radius:99px;
+    font-size:.78rem;font-weight:500;letter-spacing:.04em;
+    background:rgba(124,106,247,.12);color:var(--accent);
+    border:1px solid rgba(124,106,247,.2);
+  }
+
+  /* GRADIENT TEXT */
+  .grad{
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 55%,var(--accent3) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+
+  /* BUTTONS */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 28px;border-radius:99px;
+    font-family:'Syne',sans-serif;font-weight:600;font-size:.9rem;
+    letter-spacing:.04em;transition:var(--transition);
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff;box-shadow:0 4px 24px rgba(124,106,247,.35);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,106,247,.5)}
+  .btn-outline{
+    border:1.5px solid var(--border);color:var(--text2);
+    background:rgba(255,255,255,.03);backdrop-filter:blur(6px);
+  }
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);background:rgba(124,106,247,.06)}
+
+  /* FADE-IN ANIMATION */
+  .fade-in{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .fade-in.visible{opacity:1;transform:none}
+
+  /* ──────────────────────────────────────────
+     NAV
+  ────────────────────────────────────────── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    padding:18px 0;
+    transition:background var(--transition),backdrop-filter var(--transition),box-shadow var(--transition);
+  }
+  nav.scrolled{
+    background:rgba(10,10,15,.75);
+    backdrop-filter:blur(18px);
+    box-shadow:0 1px 0 var(--border);
+  }
+  [data-theme="light"] nav.scrolled{background:rgba(244,244,251,.8)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between}
+  .nav-logo{
+    font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .nav-links{display:flex;gap:8px;align-items:center}
+  .nav-links a{
+    font-size:.875rem;font-weight:500;padding:7px 14px;border-radius:99px;
+    color:var(--text2);transition:var(--transition);
+  }
+  .nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface)}
+  .nav-actions{display:flex;align-items:center;gap:10px}
+  #theme-toggle{
+    width:38px;height:38px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--text2);font-size:.9rem;transition:var(--transition);
+  }
+  #theme-toggle:hover{color:var(--accent);border-color:var(--accent)}
+  .hamburger{display:none;flex-direction:column;gap:5px;padding:6px}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:var(--transition)}
+  .mobile-menu{
+    display:none;position:fixed;inset:0;z-index:999;
+    background:var(--bg);padding:100px 24px 32px;
+    flex-direction:column;gap:6px;
+  }
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{
+    font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;
+    padding:14px 0;border-bottom:1px solid var(--border);color:var(--text2);
+    transition:color var(--transition);
+  }
+  .mobile-menu a:hover{color:var(--accent)}
+
+  /* ──────────────────────────────────────────
+     HERO
+  ────────────────────────────────────────── */
+  #home{
+    min-height:100vh;display:flex;align-items:center;
+    padding-top:80px;position:relative;overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:0;overflow:hidden;
+  }
+  .hero-orb{
+    position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;
+    animation:float 8s ease-in-out infinite;
+  }
+  .hero-orb:nth-child(1){width:600px;height:600px;background:var(--accent);top:-10%;left:-15%;animation-delay:0s}
+  .hero-orb:nth-child(2){width:400px;height:400px;background:var(--accent2);bottom:-5%;right:-10%;animation-delay:-3s}
+  .hero-orb:nth-child(3){width:280px;height:280px;background:var(--accent3);top:40%;left:55%;animation-delay:-6s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-28px)}}
+  .hero-grid{
+    position:absolute;inset:0;
+    background-image:linear-gradient(var(--border) 1px,transparent 1px),
+      linear-gradient(90deg,var(--border) 1px,transparent 1px);
+    background-size:48px 48px;opacity:.25;
+  }
+  [data-theme="light"] .hero-grid{opacity:.15}
+  .hero-content{position:relative;z-index:1;max-width:760px}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 18px;border-radius:99px;
+    border:1px solid rgba(124,106,247,.3);
+    background:rgba(124,106,247,.08);
+    font-size:.82rem;font-weight:500;color:var(--accent2);
+    margin-bottom:28px;
+  }
+  .hero-badge .dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 0 3px rgba(52,211,153,.2);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(52,211,153,.2)}50%{box-shadow:0 0 0 6px rgba(52,211,153,.05)}}
+  .hero-name{
+    font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7vw,5.5rem);
+    font-weight:800;line-height:1.05;margin-bottom:16px;
+  }
+  .hero-role{
+    font-family:'Syne',sans-serif;font-size:clamp(1.1rem,2.5vw,1.6rem);
+    font-weight:500;color:var(--text2);margin-bottom:28px;min-height:2em;
+  }
+  #typed-cursor{
+    display:inline-block;width:2px;height:1.1em;background:var(--accent);
+    margin-left:2px;vertical-align:text-bottom;
+    animation:blink .75s step-end infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  .hero-desc{
+    font-size:1.05rem;color:var(--text2);max-width:540px;
+    margin-bottom:40px;line-height:1.75;
+  }
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:56px}
+  .hero-socials{display:flex;gap:12px}
+  .social-pill{
+    display:flex;align-items:center;gap:8px;padding:9px 18px;
+    border-radius:99px;border:1px solid var(--border);
+    background:var(--surface);font-size:.85rem;font-weight:500;
+    color:var(--text2);transition:var(--transition);
+  }
+  .social-pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+  .social-pill i{font-size:1rem}
+  .hero-scroll{
+    position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--text3);
+  }
+  .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollLine 1.8s ease-in-out infinite}
+  @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ──────────────────────────────────────────
+     ABOUT
+  ────────────────────────────────────────── */
+  #about{background:var(--bg2)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .about-visual{
+    position:relative;
+  }
+  .about-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:36px;
+    box-shadow:var(--shadow);
+  }
+  .about-avatar{
+    width:90px;height:90px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;
+    color:#fff;margin-bottom:20px;
+    box-shadow:0 0 0 6px rgba(124,106,247,.15);
+  }
+  .about-card-name{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:4px}
+  .about-card-role{color:var(--text2);font-size:.9rem;margin-bottom:20px}
+  .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat{
+    background:var(--bg);border:1px solid var(--border);
+    border-radius:var(--radius);padding:16px;text-align:center;
+  }
+  .stat-val{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--accent);line-height:1}
+  .stat-lbl{font-size:.78rem;color:var(--text2);margin-top:4px;letter-spacing:.04em}
+  .floating-badge{
+    position:absolute;top:-18px;right:-18px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff;border-radius:var(--radius);padding:12px 16px;
+    font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;
+    box-shadow:var(--shadow);animation:float 5s ease-in-out infinite;
+  }
+  .about-text p{margin-bottom:18px;color:var(--text2);line-height:1.8;font-size:1rem}
+  .about-highlights{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .highlight{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 16px;border-radius:var(--radius);
+    background:var(--surface);border:1px solid var(--border);
+    font-size:.9rem;font-weight:500;transition:var(--transition);
+  }
+  .highlight:hover{border-color:var(--accent);transform:translateX(4px)}
+  .highlight i{color:var(--accent);width:20px;text-align:center}
+
+  /* ──────────────────────────────────────────
+     SKILLS
+  ────────────────────────────────────────── */
+  #skills{}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
+  .skill-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:28px;
+    transition:var(--transition);position:relative;overflow:hidden;
+  }
+  .skill-card::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(124,106,247,.06),rgba(192,132,252,.04));
+    opacity:0;transition:var(--transition);
+  }
+  .skill-card:hover{transform:translateY(-4px);border-color:rgba(124,106,247,.4);box-shadow:var(--shadow)}
+  .skill-card:hover::before{opacity:1}
+  .skill-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.2rem;color:#fff;margin-bottom:16px;
+  }
+  .skill-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:8px}
+  .skill-cat{font-size:.8rem;color:var(--text3);margin-bottom:16px;letter-spacing:.06em;text-transform:uppercase}
+  .skill-bar{height:5px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:8px}
+  .skill-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1) .2s;
+  }
+  .skill-pct{font-size:.78rem;color:var(--text3);text-align:right}
+
+  /* ──────────────────────────────────────────
+     PROJECTS
+  ────────────────────────────────────────── */
+  #projects{background:var(--bg2)}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-bottom:40px}
+  .project-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-lg);overflow:hidden;
+    transition:var(--transition);display:flex;flex-direction:column;
+  }
+  .project-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(124,106,247,.4)}
+  .project-thumb{
+    height:168px;display:flex;align-items:center;justify-content:center;
+    font-size:3.5rem;position:relative;overflow:hidden;
+  }
+  .project-thumb-covid{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364)}
+  .project-thumb-titanic{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)}
+  .project-thumb-web{background:linear-gradient(135deg,#0d0d1a,#1a0533,#2d0a4e)}
+  .project-thumb-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 60%);
+  }
+  .project-body{padding:24px;flex:1;display:flex;flex-direction:column}
+  .project-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .project-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:10px}
+  .project-desc{color:var(--text2);font-size:.9rem;line-height:1.7;flex:1;margin-bottom:20px}
+  .project-links{display:flex;gap:10px;margin-top:auto}
+  .project-link{
+    display:flex;align-items:center;gap:6px;
+    padding:8px 16px;border-radius:99px;font-size:.82rem;font-weight:500;
+    border:1px solid var(--border);color:var(--text2);transition:var(--transition);
+  }
+  .project-link:hover{border-color:var(--accent);color:var(--accent)}
+  .projects-cta{text-align:center}
+
+  /* ──────────────────────────────────────────
+     EXPERIENCE
+  ────────────────────────────────────────── */
+  #experience{}
+  .timeline{position:relative;padding-left:36px}
+  .timeline::before{
+    content:'';position:absolute;left:7px;top:8px;bottom:8px;
+    width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);
+    border-radius:2px;
+  }
+  .exp-item{position:relative;margin-bottom:40px}
+  .exp-dot{
+    position:absolute;left:-33px;top:8px;
+    width:18px;height:18px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:3px solid var(--bg);
+    box-shadow:0 0 0 3px rgba(124,106,247,.3);
+  }
+  .exp-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:28px;
+    transition:var(--transition);
+  }
+  .exp-card:hover{border-color:rgba(124,106,247,.4);transform:translateX(4px);box-shadow:var(--shadow)}
+  .exp-header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .exp-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem}
+  .exp-date{
+    font-size:.8rem;color:var(--accent);background:rgba(124,106,247,.1);
+    padding:4px 12px;border-radius:99px;border:1px solid rgba(124,106,247,.2);
+    font-weight:500;white-space:nowrap;align-self:flex-start;
+  }
+  .exp-company{color:var(--text2);font-size:.9rem;margin-bottom:14px;font-weight:500}
+  .exp-points{display:flex;flex-direction:column;gap:8px}
+  .exp-points li{
+    display:flex;align-items:flex-start;gap:10px;
+    color:var(--text2);font-size:.9rem;line-height:1.6;
+  }
+  .exp-points li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:2px}
+
+  /* ──────────────────────────────────────────
+     CONTACT
+  ────────────────────────────────────────── */
+  #contact{background:var(--bg2)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start}
+  .contact-info{display:flex;flex-direction:column;gap:16px}
+  .contact-card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:24px;
+    display:flex;align-items:center;gap:16px;
+    transition:var(--transition);
+  }
+  .contact-card:hover{border-color:rgba(124,106,247,.4);transform:translateX(4px)}
+  .contact-icon{
+    width:44px;height:44px;border-radius:12px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;
+    font-size:1rem;color:#fff;
+  }
+  .contact-label{font-size:.78rem;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+  .contact-val{font-weight:500;font-size:.95rem}
+  .contact-val a{transition:color var(--transition)}
+  .contact-val a:hover{color:var(--accent)}
+  .social-row{display:flex;gap:12px;margin-top:8px}
+  .social-icon{
+    width:44px;height:44px;border-radius:50%;
+    background:var(--surface);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;color:var(--text2);transition:var(--transition);
+  }
+  .social-icon:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+  /* Form */
+  .contact-form{display:flex;flex-direction:column;gap:16px}
+  .form-group{display:flex;flex-direction:column;gap:6px}
+  .form-group label{font-size:.83rem;font-weight:500;color:var(--text2);letter-spacing:.04em}
+  .form-group input,
+  .form-group textarea{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:13px 16px;
+    color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;
+    transition:border-color var(--transition),box-shadow var(--transition);
+    resize:vertical;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus{
+    outline:none;border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(124,106,247,.15);
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder{color:var(--text3)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  #form-success{display:none;text-align:center;padding:16px;color:#34d399;font-weight:500}
+
+  /* ──────────────────────────────────────────
+     FOOTER
+  ────────────────────────────────────────── */
+  footer{
+    padding:36px 0;border-top:1px solid var(--border);
+    text-align:center;color:var(--text3);font-size:.85rem;
+    position:relative;z-index:1;
+  }
+  footer span{color:var(--text2)}
+
+  /* ──────────────────────────────────────────
+     RESPONSIVE
+  ────────────────────────────────────────── */
+  @media(max-width:900px){
+    .about-grid,.contact-grid{grid-template-columns:1fr}
+    .about-visual{order:-1}
+    .floating-badge{display:none}
+    .nav-links{display:none}
+    .hamburger{display:flex}
+  }
+  @media(max-width:600px){
+    .section{padding:72px 0}
+    .form-row{grid-template-columns:1fr}
+    .projects-grid{grid-template-columns:1fr}
+    .hero-name{font-size:clamp(2.2rem,9vw,3rem)}
+    .hero-cta{flex-direction:column}
+    .hero-cta .btn{justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- ───── NAV ───── -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="nav-logo">SR.</a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#home" class="mobile-link">Home</a>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#projects" class="mobile-link">Projects</a>
+  <a href="#experience" class="mobile-link">Experience</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- ───── HERO ───── -->
+<section id="home">
+  <div class="hero-bg">
+    <div class="hero-orb"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-badge fade-in"><span class="dot"></span> Open to Opportunities</div>
+    <h1 class="hero-name fade-in">
+      Hi, I'm<br>
+      <span class="grad">Shraddha Rawat</span>
+    </h1>
+    <p class="hero-role fade-in"><span id="typed-text"></span><span id="typed-cursor"></span></p>
+    <p class="hero-desc fade-in">
+      B.S Computer Science student passionate about turning data into insights and building clean, functional web experiences. I love working at the intersection of code, data, and design.
+    </p>
+    <div class="hero-cta fade-in">
+      <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View My Work</a>
+      <a href="#" class="btn btn-outline" id="download-btn" download><i class="fas fa-download"></i>Resume</a>
+    </div>
+    <div class="hero-socials fade-in">
+      <a href="https://www.linkedin.com/in/shraddha-rawat-0b47aa309/" target="_blank" rel="noopener" class="social-pill">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </a>
+      <a href="https://github.com/shraddha-369" target="_blank" rel="noopener" class="social-pill">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ───── ABOUT ───── -->
+<section id="about" class="section">
+  <div class="container">
+    <p class="section-label fade-in">Get to know me</p>
+    <h2 class="section-title fade-in">About <span class="grad">Me</span></h2>
+    <div class="about-grid">
+      <div class="about-visual fade-in">
+        <div class="about-card">
+          <div class="about-avatar">SR</div>
+          <div class="about-card-name">Shraddha Rawat</div>
+          <div class="about-card-role">Python Developer & Data Science Enthusiast</div>
+          <div class="about-stats">
+            <div class="stat"><div class="stat-val">2+</div><div class="stat-lbl">Internships</div></div>
+            <div class="stat"><div class="stat-val">5+</div><div class="stat-lbl">Projects</div></div>
+            <div class="stat"><div class="stat-val">7+</div><div class="stat-lbl">Tech Skills</div></div>
+            <div class="stat"><div class="stat-val">∞</div><div class="stat-lbl">Curiosity</div></div>
+          </div>
+        </div>
+        <div class="floating-badge">🎓 B.S CS Student</div>
+      </div>
+      <div class="about-text fade-in">
+        <p>
+          I'm a <strong>B.S Computer Science student</strong> with a deep interest in data science and web development. I enjoy extracting meaningful patterns from data and presenting them in a compelling way.
+        </p>
+        <p>
+          My journey in tech has led me to work with industry tools like <strong>Pandas, NumPy, Matplotlib, and Seaborn</strong> for data analysis, while also building foundational skills in web development using HTML, CSS, and JavaScript.
+        </p>
+        <p>
+          I've applied my skills in real-world settings through two internships — one in Data Science and one in Web Development — and I'm always looking to learn more and contribute to meaningful projects.
+        </p>
+        <div class="about-highlights">
+          <div class="highlight"><i class="fas fa-chart-line"></i> Data Science & Visualization</div>
+          <div class="highlight"><i class="fas fa-code"></i> Python & Scientific Computing</div>
+          <div class="highlight"><i class="fas fa-globe"></i> Web Development (HTML/CSS/JS)</div>
+          <div class="highlight"><i class="fas fa-database"></i> SQL & Database Basics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── SKILLS ───── -->
+<section id="skills" class="section">
+  <div class="container">
+    <p class="section-label fade-in">What I work with</p>
+    <h2 class="section-title fade-in">My <span class="grad">Skills</span></h2>
+    <p class="section-sub fade-in">A toolkit built through coursework, internships, and hands-on projects.</p>
+    <div class="skills-grid">
+      <div class="skill-card fade-in" data-skill="88">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-cat">Core Language</div>
+        <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+        <div class="skill-pct">88%</div>
+      </div>
+      <div class="skill-card fade-in" data-skill="85">
+        <div class="skill-icon">🐼</div>
+        <div class="skill-name">Pandas</div>
+        <div class="skill-cat">Data Analysis</div>
+        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+        <div class="skill-pct">85%</div>
+      </div>
+      <div class="skill-card fade-in" data-skill="83">
+        <div class="skill-icon">🔢</div>
+        <div class="skill-name">NumPy</div>
+        <div class="skill-cat">Scientific Computing</div>
+        <div class="skill-bar"><div class="skill-fill" data-width="83"></div></div>
+        <div class="skill-pct">83%</div>
+      </div>
+      <div class="skill-card fade-in" data-skill="80">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">Matplotlib</div>
+        <div class="skill-cat">Data Visualization</div>
+        <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+        <div class="skill-pct">80%</div>
+      </div>
+      <div class="skill-card fade-in" data-skill="78">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">Seaborn</div>
+        <div class="skill-cat">Statistical Visualization</div>
+        <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+        <div class="skill-pct">78%</div>
+      </div>
+      <div class="skill-card fade-in" data-skill="75">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">HTML & CSS</div>
+        <div class="skill-cat">Web Development</div>
+        <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+        <div class="skill-pct">75%</div>
+      </div>
+      <div class="skill-card fade-in" data-skill="65">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-cat">Web Development</div>
+        <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+        <div class="skill-pct">65%</div>
+      </div>
+      <div class="skill-card fade-in" data-skill="60">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-name">SQL</div>
+        <div class="skill-cat">Databases (Basics)</div>
+        <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
+        <div class="skill-pct">60%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── PROJECTS ───── -->
+<section id="projects" class="section">
+  <div class="container">
+    <p class="section-label fade-in">What I've built</p>
+    <h2 class="section-title fade-in">Featured <span class="grad">Projects</span></h2>
+    <p class="section-sub fade-in">Selected data science and development work.</p>
+    <div class="projects-grid">
+
+      <!-- Project 1 -->
+      <div class="project-card fade-in">
+        <div class="project-thumb project-thumb-covid">
+          <span style="position:relative;z-index:1">🦠</span>
+          <div class="project-thumb-overlay"></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">Matplotlib</span>
+          </div>
+          <div class="project-title">COVID-19 Data Visualization</div>
+          <p class="project-desc">
+            Analyzed and visualized global COVID-19 trends using real-world datasets. Created interactive charts showing case trends, recovery rates, and mortality data across countries to uncover meaningful patterns.
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/shraddha-369" target="_blank" rel="noopener" class="project-link">
+              <i class="fab fa-github"></i> Code
+            </a>
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card fade-in">
+        <div class="project-thumb project-thumb-titanic">
+          <span style="position:relative;z-index:1">🚢</span>
+          <div class="project-thumb-overlay"></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Seaborn</span>
+            <span class="tag">EDA</span>
+          </div>
+          <div class="project-title">Titanic Dataset EDA</div>
+          <p class="project-desc">
+            Performed in-depth Exploratory Data Analysis on the Titanic dataset. Uncovered survival patterns based on gender, class, and age using statistical analysis, heatmaps, and distribution plots.
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/shraddha-369" target="_blank" rel="noopener" class="project-link">
+              <i class="fab fa-github"></i> Code
+            </a>
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card fade-in">
+        <div class="project-thumb project-thumb-web">
+          <span style="position:relative;z-index:1">💻</span>
+          <div class="project-thumb-overlay"></div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          <div class="project-title">AI Powered Career Guidance and Job Matching Platform</div>
+          <p class="project-desc">
+            Built an AI-powered career guidance and job matching platform that analyzes user skills and preferences to recommend suitable career paths and job opportunities. Integrates machine learning, data analysis, and intuitive UI to deliver personalized, data-driven career insights.
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/shraddha-369" target="_blank" rel="noopener" class="project-link">
+              <i class="fab fa-github"></i> Code
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="projects-cta fade-in">
+      <a href="https://github.com/shraddha-369" target="_blank" rel="noopener" class="btn btn-outline">
+        <i class="fab fa-github"></i> View More on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ───── EXPERIENCE ───── -->
+<section id="experience" class="section">
+  <div class="container">
+    <p class="section-label fade-in">Where I've worked</p>
+    <h2 class="section-title fade-in">Work <span class="grad">Experience</span></h2>
+    <p class="section-sub fade-in">Practical experience gained through internships in data science and web development.</p>
+    <div class="timeline">
+
+      <!-- ── NEW ENTRY: Unified Mentor ── -->
+      <div class="exp-item fade-in">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-title">Data Science Intern</div>
+            <div class="exp-date">2025</div>
+          </div>
+          <div class="exp-company">
+            <i class="fas fa-brain" style="margin-right:6px;color:var(--accent2)"></i>HCL Technologies
+            <span style="margin-left:8px;font-size:.78rem;color:var(--text3);font-weight:400;background:rgba(124,106,247,.08);border:1px solid rgba(124,106,247,.18);padding:2px 10px;border-radius:99px;vertical-align:middle;">Internship</span>
+          </div>
+          <ul class="exp-points">
+            <li>Worked on data analysis and machine learning tasks on real-world datasets</li>
+            <li>Performed data cleaning, exploratory data analysis (EDA), and statistical visualization</li>
+            <li>Built and evaluated predictive models using Scikit-learn for classification and regression tasks</li>
+            <li>Used Python libraries — Pandas, NumPy, Matplotlib, and Scikit-learn — throughout the project lifecycle</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item fade-in">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-title">Data Science Intern</div>
+            <div class="exp-date">2025</div>
+          </div>
+          <div class="exp-company"><i class="fas fa-building" style="margin-right:6px;color:var(--accent2)"></i>Unified Mentor</div>
+          <ul class="exp-points">
+            <li>Worked on real-world data analysis projects using Python, Pandas, and NumPy to process and clean large datasets</li>
+            <li>Created insightful visualizations using Matplotlib and Seaborn to communicate findings to stakeholders</li>
+            <li>Performed exploratory data analysis (EDA) on multiple datasets to identify trends and patterns</li>
+            <li>Documented findings and prepared reports summarizing data-driven insights</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item fade-in">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-title">Web Development Intern</div>
+            <div class="exp-date">2026</div>
+          </div>
+          <div class="exp-company"><i class="fas fa-university" style="margin-right:6px;color:var(--accent2)"></i>Incubation Centre, IIT Patna</div>
+          <ul class="exp-points">
+            <li>Developed and maintained responsive web pages using HTML, CSS, and JavaScript</li>
+            <li>Collaborated with a team to build UI components following modern design principles</li>
+            <li>Improved website performance and cross-browser compatibility</li>
+            <li>Gained hands-on experience with version control using Git and project workflows</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───── CONTACT ───── -->
+<section id="contact" class="section">
+  <div class="container">
+    <p class="section-label fade-in">Let's connect</p>
+    <h2 class="section-title fade-in">Get in <span class="grad">Touch</span></h2>
+    <p class="section-sub fade-in">Have an opportunity or just want to say hi? My inbox is always open.</p>
+    <div class="contact-grid">
+      <div class="contact-info fade-in">
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-val"><a href="mailto:shraddha_2312res621@iitp.ac.in">shraddha_2312res621@iitp.ac.in</a></div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon" style="background:linear-gradient(135deg,#0a66c2,#0e76a8)"><i class="fab fa-linkedin"></i></div>
+          <div>
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-val"><a href="https://www.linkedin.com/in/shraddha-rawat-0b47aa309/" target="_blank" rel="noopener">linkedin.com/in/shraddharawat</a></div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon" style="background:linear-gradient(135deg,#24292e,#444)"><i class="fab fa-github"></i></div>
+          <div>
+            <div class="contact-label">GitHub</div>
+            <div class="contact-val"><a href="https://github.com/shraddha-369" target="_blank" rel="noopener">github.com/shraddharawat</a></div>
+          </div>
+        </div>
+        <div style="margin-top:8px">
+          <div class="contact-label" style="margin-bottom:10px">Social Links</div>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/shraddha-rawat-0b47aa309/" target="_blank" rel="noopener" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/shraddha-369" target="_blank" rel="noopener" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="mailto:shraddha_2312res621@iitp.ac.in" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in">
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Jane" />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Doe" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="sr@example.com" />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="Internship opportunity / Collaboration" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Tell me what's on your mind..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+          <div id="form-success">✅ Message sent! I'll get back to you soon.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───── FOOTER ───── -->
+<footer>
+  <div class="container">
+    <p>Designed & built by <span>Shraddha Rawat</span> · 2026 · Made with <span style="color:#e25555">♥</span> and a lot of Python</p>
+  </div>
+</footer>
+
+<!-- ───── JS ───── -->
+<script>
+/* ── NAV SCROLL ── */
+const navbar = document.getElementById('navbar');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+  let cur = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+  });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+});
+
+/* ── HAMBURGER ── */
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobile-menu');
+ham.addEventListener('click', () => {
+  mob.classList.toggle('open');
+  document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+});
+document.querySelectorAll('.mobile-link').forEach(a => {
+  a.addEventListener('click', () => { mob.classList.remove('open'); document.body.style.overflow = ''; });
+});
+
+/* ── THEME TOGGLE ── */
+const themeBtn = document.getElementById('theme-toggle');
+const icon = themeBtn.querySelector('i');
+themeBtn.addEventListener('click', () => {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+  icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+});
+
+/* ── TYPED EFFECT ── */
+const phrases = [
+  'Python Developer',
+  'Data Science Enthusiast',
+  'Web Developer',
+  'Data Visualizer',
+];
+let pi = 0, ci = 0, deleting = false;
+const typedEl = document.getElementById('typed-text');
+function type() {
+  const phrase = phrases[pi];
+  typedEl.textContent = deleting ? phrase.slice(0, ci--) : phrase.slice(0, ci++);
+  let delay = deleting ? 55 : 110;
+  if (!deleting && ci > phrase.length) { delay = 1800; deleting = true; }
+  else if (deleting && ci < 0) { deleting = false; pi = (pi + 1) % phrases.length; ci = 0; delay = 400; }
+  setTimeout(type, delay);
+}
+type();
+
+/* ── INTERSECTION OBSERVER (fade-in + skill bars) ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('visible');
+    const fill = entry.target.querySelector('.skill-fill');
+    if (fill) fill.style.width = fill.dataset.width + '%';
+    observer.unobserve(entry.target);
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ── CONTACT FORM ── */
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const success = document.getElementById('form-success');
+  success.style.display = 'block';
+  this.reset();
+  setTimeout(() => success.style.display = 'none', 4000);
+});
+
+/* ── DOWNLOAD RESUME (placeholder) ── */
+document.getElementById('download-btn').addEventListener('click', (e) => {
+  e.preventDefault();
+  alert('📄 Resume download would start here.\nReplace this with a real PDF link.');
+});
+</script>
+</body>
+</html>
